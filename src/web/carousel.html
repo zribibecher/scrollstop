@@ -30,8 +30,12 @@
   <!-- TOP BAR -->
   <div class="no-print w-full max-w-4xl flex flex-wrap items-center justify-between gap-4 mb-6 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
     <div class="flex items-center gap-3">
-      <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-black text-sm">
-        🛑
+      <div class="w-8 h-8 rounded-lg bg-[#0a66c2] flex items-center justify-center text-white shadow-sm">
+        <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3v9m0 0l-3-3m3 3l3-3" opacity="0.6"/>
+          <line x1="4" y1="16" x2="20" y2="16" stroke-width="3"/>
+          <circle cx="12" cy="16" r="1.5" fill="#f59e0b" stroke="none"/>
+        </svg>
       </div>
       <div>
         <h1 class="text-base font-bold text-slate-900">ScrollStop · LinkedIn Carousel Deck</h1>
@@ -79,183 +83,320 @@
     const slidesData = [
       {
         num: "01 / 06",
-        badge: "THE FORMATTING TRAP",
-        headline: "Writing inside LinkedIn?<br>Your posts break.",
-        subtitle: "You write clean technical notes. Mobile turns them into walls of text.",
-        cards: [
-          {
-            icon: "🚨",
-            title: "Collapsed Blank Lines",
-            text: "Mobile apps strip double returns into one dense, unreadable block.",
-            border: "border-l-4 border-red-500"
-          },
-          {
-            icon: "🔢",
-            title: "Fragile Numbering",
-            text: "Deleting one bullet forces you to renumber every line manually.",
-            border: "border-l-4 border-amber-500"
-          },
-          {
-            icon: "✂️",
-            title: "Buried Hooks",
-            text: "Crucial takeaways get chopped off before the 140-character fold.",
-            border: "border-l-4 border-rose-500"
-          }
-        ],
+        badge: "LINKEDIN POST ARCHITECTURE",
+        headline: "Writing inside LinkedIn?<br><span class=\"text-[#0a66c2]\">Why your posts break.</span>",
+        subtitle: "You draft clean technical insights. LinkedIn's mobile editor strips your spacing into an unreadable wall of text.",
+        contentHtml: `
+          <!-- Simulated Mobile Post Card -->
+          <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 shadow-sm mb-4">
+            <div class="flex items-center gap-2.5 pb-2.5 mb-2.5 border-b border-slate-200/70">
+              <div class="w-7 h-7 rounded-full bg-[#0a66c2] text-white font-bold text-[11px] flex items-center justify-center">
+                BZ
+              </div>
+              <div class="text-[11px] leading-tight">
+                <span class="font-bold text-slate-900 block">Becher Zribi · Automation Engineer</span>
+                <span class="text-slate-400 text-[10px]">Just now · 🌐</span>
+              </div>
+            </div>
+
+            <!-- Native Post Text with Cutoff Fold -->
+            <div class="text-[11px] text-slate-700 leading-relaxed font-sans relative">
+              <p>Most developers do not have an AI problem. They have an input problem. When coding you think in fast thoughts: 1. FastAPI endpoint 2. Postgres filter 3. Avoid crashes...</p>
+              
+              <!-- Cutoff Fold Warning -->
+              <div class="my-2 border-t-2 border-dashed border-red-300 relative flex items-center justify-center">
+                <span class="bg-red-50 text-red-600 border border-red-200 text-[9px] font-bold px-2 py-0.5 rounded-full absolute -top-2.5">
+                  Mobile "...see more" Cutoff (140 characters)
+                </span>
+              </div>
+
+              <span class="text-slate-400 font-semibold cursor-pointer">[ ...see more ]</span>
+            </div>
+          </div>
+
+          <!-- 3 Technical Problem Badges -->
+          <div class="space-y-2">
+            <div class="bg-white rounded-xl p-2.5 border border-slate-200/90 shadow-xs flex items-start gap-2.5">
+              <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded border border-red-100 shrink-0">Line Collapse</span>
+              <p class="text-[11px] text-slate-600 leading-tight">Double line breaks get stripped into a solid block on iOS and Android apps.</p>
+            </div>
+            <div class="bg-white rounded-xl p-2.5 border border-slate-200/90 shadow-xs flex items-start gap-2.5">
+              <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-100 shrink-0">Broken Lists</span>
+              <p class="text-[11px] text-slate-600 leading-tight">Deleting one bullet point breaks numbering order and forces manual retyping.</p>
+            </div>
+            <div class="bg-white rounded-xl p-2.5 border border-slate-200/90 shadow-xs flex items-start gap-2.5">
+              <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100 shrink-0">Zero Styling</span>
+              <p class="text-[11px] text-slate-600 leading-tight">LinkedIn offers no native buttons for bold headers, italics, or code blocks.</p>
+            </div>
+          </div>
+        `,
         footerLeft: "Becher Zribi · ScrollStop",
         footerRight: "Swipe →"
       },
       {
         num: "02 / 06",
         badge: "THE ALGORITHM PENALTY",
-        headline: "3 silent flaws that<br>kill feed distribution.",
-        subtitle: "LinkedIn measures dwell time. Formatting friction kills it instantly.",
-        cards: [
-          {
-            icon: "📉",
-            title: "The 140-Character Fold",
-            text: "If readers do not tap \"...see more\", your post distribution dies.",
-            border: "border-l-4 border-red-500"
-          },
-          {
-            icon: "⏱️",
-            title: "Missing Whitespace",
-            text: "Readers bounce in under two seconds when facing solid text.",
-            border: "border-l-4 border-amber-500"
-          },
-          {
-            icon: "⚠️",
-            title: "Broken Sequences",
-            text: "Manual formatting errors distract readers from your core technical insight.",
-            border: "border-l-4 border-orange-500"
-          }
-        ],
+        headline: "3 silent flaws that kill<br>your post's feed reach.",
+        subtitle: "LinkedIn's 360Brew algorithm measures dwell time. Formatting friction makes readers scroll away in under 2 seconds:",
+        contentHtml: `
+          <div class="space-y-3">
+            <div class="bg-slate-50/80 rounded-2xl p-3.5 border border-slate-200 flex items-start gap-3 shadow-xs">
+              <div class="w-7 h-7 rounded-xl bg-red-100 text-red-700 font-extrabold text-xs flex items-center justify-center shrink-0">
+                01
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-1">
+                  <h3 class="text-xs md:text-sm font-bold text-slate-900">The 140-Character Mobile Fold</h3>
+                  <span class="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded border border-red-200">-80% Reach</span>
+                </div>
+                <p class="text-[11px] text-slate-600 leading-normal">
+                  If your hook does not trigger a "...see more" click, algorithmic dwell time drops to zero instantly.
+                </p>
+              </div>
+            </div>
+
+            <div class="bg-slate-50/80 rounded-2xl p-3.5 border border-slate-200 flex items-start gap-3 shadow-xs">
+              <div class="w-7 h-7 rounded-xl bg-amber-100 text-amber-800 font-extrabold text-xs flex items-center justify-center shrink-0">
+                02
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-1">
+                  <h3 class="text-xs md:text-sm font-bold text-slate-900">Mobile Whitespace Collapse</h3>
+                  <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Bounce in &lt;2s</span>
+                </div>
+                <p class="text-[11px] text-slate-600 leading-normal">
+                  Dense paragraphs without whitespace cause readers to bounce before discovering your technical takeaway.
+                </p>
+              </div>
+            </div>
+
+            <div class="bg-slate-50/80 rounded-2xl p-3.5 border border-slate-200 flex items-start gap-3 shadow-xs">
+              <div class="w-7 h-7 rounded-xl bg-blue-100 text-blue-700 font-extrabold text-xs flex items-center justify-center shrink-0">
+                03
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-1">
+                  <h3 class="text-xs md:text-sm font-bold text-slate-900">External Links in Post Body</h3>
+                  <span class="text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">-40% Penalty</span>
+                </div>
+                <p class="text-[11px] text-slate-600 leading-normal">
+                  Placing external URLs directly in your post body triggers algorithmic feed suppression. Links belong in comments.
+                </p>
+              </div>
+            </div>
+          </div>
+        `,
         footerLeft: "Becher Zribi · ScrollStop",
         footerRight: "Swipe →"
       },
       {
         num: "03 / 06",
-        badge: "THE ENGINE",
-        headline: "Format and lint<br>in one single click.",
-        subtitle: "An open-source studio built to automate your posting workflow.",
-        cards: [
-          {
-            icon: "⚡",
-            title: "1-Click Auto-Format",
-            text: "Bolds headers, fixes paragraph whitespace, and renumbers broken lists.",
-            border: "border-l-4 border-blue-500"
-          },
-          {
-            icon: "🧠",
-            title: "Gemini AI Formulate",
-            text: "Turns messy bullet notes into structured drafts via Gemini Flash.",
-            border: "border-l-4 border-purple-500"
-          },
-          {
-            icon: "📱",
-            title: "Live Mobile Simulator",
-            text: "Shows your exact mobile fold cutoff before you hit publish.",
-            border: "border-l-4 border-emerald-500"
-          }
-        ],
+        badge: "THE DUAL ENGINE",
+        headline: "Auto-Format vs. AI Formulate.<br>Pick the right engine.",
+        subtitle: "ScrollStop gives you two dedicated tools for two distinct writing workflows:",
+        contentHtml: `
+          <div class="space-y-3 mb-3">
+            <!-- Engine 1: Auto-Format Image -->
+            <div class="rounded-2xl overflow-hidden border border-amber-300/90 shadow-xs bg-white">
+              <img src="./assets/auto-format.png" alt="1-Click Auto-Format Engine" class="w-full h-auto max-h-[140px] object-contain block mx-auto" />
+            </div>
+
+            <!-- Engine 2: AI Formulate Image -->
+            <div class="rounded-2xl overflow-hidden border border-purple-300/90 shadow-xs bg-white">
+              <img src="./assets/ai-formulate.png" alt="Gemini AI Formulate Engine" class="w-full h-auto max-h-[140px] object-contain block mx-auto" />
+            </div>
+
+            <!-- Clear Difference Tag -->
+            <div class="bg-slate-50 rounded-xl px-3 py-2 border border-slate-200/80 flex items-center justify-between text-[11px]">
+              <span class="font-extrabold text-slate-900">Summary:</span>
+              <span class="text-slate-600 font-medium">Draft ready? Use Auto-Format. Rough thoughts? Use AI Formulate.</span>
+            </div>
+          </div>
+        `,
         footerLeft: "Becher Zribi · ScrollStop",
         footerRight: "Swipe →"
       },
       {
         num: "04 / 06",
-        badge: "BEFORE VS AFTER",
-        headline: "The exact same post.<br>Transformed in seconds.",
-        subtitle: "From unreadable draft to an optimized post ready for distribution.",
-        cards: [
-          {
-            icon: "🛑",
-            title: "Raw LinkedIn Input",
-            text: "Wall of text, buried hook, and unformatted numbers with zero contrast.",
-            border: "border-l-4 border-red-500"
-          },
-          {
-            icon: "⚡",
-            title: "ScrollStop Output",
-            text: "Bold headers, isolated hook, and preserved blank lines for mobile screens.",
-            border: "border-l-4 border-blue-500"
-          },
-          {
-            icon: "✓",
-            title: "Verified Result",
-            text: "98% algorithm reach score with zero mobile line collapse.",
-            border: "border-l-4 border-emerald-500"
-          }
-        ],
+        badge: "REAL TRANSFORMATION",
+        headline: "The exact same post,<br>transformed in 1 second.",
+        subtitle: "From raw unreadable draft to an algorithm-optimized post ready to publish:",
+        contentHtml: `
+          <div class="space-y-3 mb-2">
+            <!-- BEFORE -->
+            <div class="bg-red-50/40 rounded-2xl p-3 border border-red-200 shadow-xs">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-[10px] font-extrabold uppercase tracking-wider text-red-700 bg-red-100 px-2 py-0.5 rounded border border-red-200">
+                  Before: Raw Draft in LinkedIn
+                </span>
+                <span class="text-[10px] font-bold text-red-600">Poor Reach</span>
+              </div>
+              <div class="text-[11px] text-slate-700 font-mono leading-relaxed bg-white rounded-xl p-2.5 border border-red-100">
+                Most developers don't have an AI problem. When coding you think fast: 1. FastAPI 2. Postgres filter 3. Avoid crashes. Paste directly and models hallucinate...
+              </div>
+              <div class="mt-1.5 flex items-center gap-2 text-[10px] font-semibold text-red-700">
+                <span>✕ Dense block</span>
+                <span>·</span>
+                <span>✕ No bold headers</span>
+                <span>·</span>
+                <span>✕ Hook cut off</span>
+              </div>
+            </div>
+
+            <!-- AFTER -->
+            <div class="bg-emerald-50/40 rounded-2xl p-3 border border-emerald-300 shadow-xs">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded border border-emerald-300">
+                  After: 1-Click ScrollStop
+                </span>
+                <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded border border-emerald-300">
+                  ✓ 98% Reach Score
+                </span>
+              </div>
+              <div class="text-[11px] text-slate-900 leading-snug bg-white rounded-xl p-2.5 border border-emerald-200 space-y-1">
+                <p class="font-extrabold text-slate-950">𝗠𝗼𝘀𝘁 𝗱𝗲𝘃𝗲𝗹𝗼𝗽𝗲𝗿𝘀 𝗱𝗼𝗻'𝘁 𝗵𝗮𝘃𝗲 𝗮𝗻 𝗔𝗜 𝗽𝗿𝗼𝗯𝗹𝗲𝗺.</p>
+                <p class="text-slate-600 text-[10px]">When coding, we think fast:</p>
+                <p class="text-slate-800">1. FastAPI endpoint</p>
+                <p class="text-slate-800">2. PostgreSQL duplicate filter</p>
+              </div>
+              <div class="mt-1.5 flex items-center gap-2 text-[10px] font-bold text-emerald-800">
+                <span>✓ Hook isolated</span>
+                <span>·</span>
+                <span>✓ Mobile spacing preserved</span>
+                <span>·</span>
+                <span>✓ Clean lists</span>
+              </div>
+            </div>
+          </div>
+        `,
         footerLeft: "Becher Zribi · ScrollStop",
         footerRight: "Swipe →"
       },
       {
         num: "05 / 06",
-        badge: "RANKING SIGNALS",
-        headline: "3 core signals<br>audited in real time.",
-        subtitle: "Every draft is tested against proven feed mechanics:",
-        cards: [
-          {
-            icon: "🎯",
-            title: "Mobile Cutoff Guard",
-            text: "Keeps your opening hook under 12 words to trigger clicks.",
-            border: "border-l-4 border-blue-500"
-          },
-          {
-            icon: "📱",
-            title: "Whitespace Balance",
-            text: "Enforces clean 1-2 sentence paragraphs to protect reading dwell time.",
-            border: "border-l-4 border-emerald-500"
-          },
-          {
-            icon: "🔗",
-            title: "Link Safety Guard",
-            text: "Flags external links in your post body to prevent reach penalties.",
-            border: "border-l-4 border-amber-500"
-          }
-        ],
+        badge: "FEED LINTER & SIMULATOR",
+        headline: "Audit your post cutoff<br>before you hit publish.",
+        subtitle: "Every draft is audited in real time against verified 360Brew feed ranking signals:",
+        contentHtml: `
+          <!-- Live Simulator Visual -->
+          <div class="bg-slate-900 rounded-2xl p-4 text-white shadow-md mb-3">
+            <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-800 text-[10px] text-slate-400">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span>Mobile Feed Simulator</span>
+              </div>
+              <span class="font-mono text-emerald-400 font-bold">Score: 98/100</span>
+            </div>
+
+            <!-- Feed Preview with Cutoff Line -->
+            <div class="bg-slate-950/60 rounded-xl p-3 border border-slate-800 text-xs">
+              <p class="font-extrabold text-white mb-2">Most developers do not have an AI problem.</p>
+              
+              <div class="border-t border-dashed border-amber-400/80 my-2 relative">
+                <span class="bg-amber-400 text-slate-950 text-[9px] font-black px-1.5 py-0.2 rounded absolute -top-2 right-2">
+                  140-char fold cutoff
+                </span>
+              </div>
+
+              <p class="text-slate-400 text-[11px] leading-relaxed">When coding, we think in fast thoughts...</p>
+            </div>
+          </div>
+
+          <!-- Linter Signal Checks -->
+          <div class="grid grid-cols-3 gap-2 text-center">
+            <div class="bg-slate-50 rounded-xl p-2.5 border border-slate-200">
+              <div class="text-[10px] font-bold text-emerald-600 mb-0.5">✓ Optimal</div>
+              <div class="text-[11px] font-bold text-slate-900 leading-tight">Opening Hook</div>
+              <div class="text-[9px] text-slate-500 mt-0.5">&lt; 14 words</div>
+            </div>
+            <div class="bg-slate-50 rounded-xl p-2.5 border border-slate-200">
+              <div class="text-[10px] font-bold text-emerald-600 mb-0.5">✓ Safe</div>
+              <div class="text-[11px] font-bold text-slate-900 leading-tight">Whitespace</div>
+              <div class="text-[9px] text-slate-500 mt-0.5">No collapse</div>
+            </div>
+            <div class="bg-slate-50 rounded-xl p-2.5 border border-slate-200">
+              <div class="text-[10px] font-bold text-emerald-600 mb-0.5">✓ Clean</div>
+              <div class="text-[11px] font-bold text-slate-900 leading-tight">Zero Links</div>
+              <div class="text-[9px] text-slate-500 mt-0.5">Comment only</div>
+            </div>
+          </div>
+        `,
         footerLeft: "Becher Zribi · ScrollStop",
         footerRight: "Swipe →"
       },
       {
         num: "06 / 06",
-        badge: "GET STARTED",
-        headline: "Open source.<br>Zero subscriptions.",
-        subtitle: "Runs directly in your browser with no accounts and no paywalls.",
-        cards: [
-          {
-            icon: "🌐",
-            title: "Live Web Studio",
-            text: "Test, format, and lint your posts on any device: zribibecher.github.io/scrollstop",
-            border: "border-l-4 border-blue-500"
-          },
-          {
-            icon: "💻",
-            title: "GitHub Repository",
-            text: "Zero dependencies, built with Vite, backed by 41 automated tests.",
-            border: "border-l-4 border-purple-500"
-          },
-          {
-            icon: "🚀",
-            title: "Coming Next",
-            text: "A local Chrome extension to style posts directly inside LinkedIn.",
-            border: "border-l-4 border-emerald-500"
-          }
-        ],
+        badge: "OPEN SOURCE & ZERO PAYWALLS",
+        headline: "100% free, open source,<br>and runs in your browser.",
+        subtitle: "No accounts, no subscriptions, zero tracking. Built by engineers, for engineers.",
+        contentHtml: `
+          <div class="space-y-2.5">
+            <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-blue-50 text-[#0a66c2] flex items-center justify-center font-bold text-sm border border-blue-200">
+                  🌐
+                </div>
+                <div>
+                  <h3 class="text-xs font-bold text-slate-900">Live Web Studio</h3>
+                  <p class="text-[11px] text-slate-500 font-mono">zribibecher.github.io/scrollstop</p>
+                </div>
+              </div>
+              <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded">Instant</span>
+            </div>
+
+            <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-700 flex items-center justify-center font-bold text-sm border border-purple-200">
+                  💻
+                </div>
+                <div>
+                  <h3 class="text-xs font-bold text-slate-900">GitHub Repository</h3>
+                  <p class="text-[11px] text-slate-500 font-mono">github.com/zribibecher/scrollstop</p>
+                </div>
+              </div>
+              <span class="text-[10px] font-bold text-purple-700 bg-purple-50 px-2 py-1 rounded">41 Tests</span>
+            </div>
+
+            <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-sm border border-emerald-200">
+                  ⚡
+                </div>
+                <div>
+                  <h3 class="text-xs font-bold text-slate-900">Chrome Extension</h3>
+                  <p class="text-[11px] text-slate-500">Style posts directly inside LinkedIn.</p>
+                </div>
+              </div>
+              <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded">Coming Next</span>
+            </div>
+
+            <!-- Call to Action Banner -->
+            <div class="bg-[#0a66c2] text-white rounded-2xl p-3.5 text-center shadow-md">
+              <h4 class="font-extrabold text-sm mb-1">Want to test your next post?</h4>
+              <p class="text-xs text-blue-100 font-medium">Link to the live Web Studio is in the first comment 👇</p>
+            </div>
+          </div>
+        `,
         footerLeft: "Becher Zribi · ScrollStop",
-        footerRight: "Link in first comment 👇"
+        footerRight: "Save for reference •"
       }
     ];
 
     function renderSlideHTML(slide) {
       return `
-        <div class="slide-page slide-card bg-white rounded-3xl border border-slate-200/80 p-7 md:p-8 flex flex-col justify-between shadow-[0_10px_30px_rgba(0,0,0,0.06)] relative overflow-hidden">
-          <!-- Top Header -->
+        <div class="slide-page slide-card bg-white rounded-3xl border border-slate-200/80 p-6 md:p-7 flex flex-col justify-between shadow-[0_10px_30px_rgba(0,0,0,0.06)] relative overflow-hidden">
+          <!-- Top Header with Official Logo -->
           <div>
-            <div class="flex items-center justify-between mb-5">
+            <div class="flex items-center justify-between mb-3.5">
               <div class="flex items-center gap-2">
-                <span class="text-base">🛑</span>
-                <span class="font-extrabold text-sm tracking-tight text-slate-900">ScrollStop</span>
+                <div class="w-6 h-6 rounded-lg bg-[#0a66c2] flex items-center justify-center shadow-xs">
+                  <svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3v9m0 0l-3-3m3 3l3-3" opacity="0.6"/>
+                    <line x1="4" y1="16" x2="20" y2="16" stroke-width="3"/>
+                    <circle cx="12" cy="16" r="1.5" fill="#f59e0b" stroke="none"/>
+                  </svg>
+                </div>
+                <span class="font-black text-sm tracking-tight text-slate-900">Scroll<span class="text-[#0a66c2]">Stop</span></span>
               </div>
               <span class="text-[11px] font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200/60">
                 ${slide.num}
@@ -263,38 +404,26 @@
             </div>
 
             <!-- Badge -->
-            <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-50 text-blue-600 border border-blue-200/60 uppercase tracking-wider mb-3">
+            <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-50 text-blue-600 border border-blue-200/60 uppercase tracking-wider mb-2">
               ${slide.badge}
             </div>
 
             <!-- Headline -->
-            <h2 class="text-2xl md:text-3xl font-black text-slate-950 tracking-tight leading-tight mb-2">
+            <h2 class="text-2xl md:text-[25px] font-black text-slate-950 tracking-tight leading-tight mb-1.5">
               ${slide.headline}
             </h2>
 
             <!-- Subtitle -->
-            <p class="text-xs md:text-sm text-slate-600 leading-relaxed font-normal mb-5">
+            <p class="text-xs md:text-[12.5px] text-slate-600 leading-relaxed font-normal mb-3">
               ${slide.subtitle}
             </p>
 
-            <!-- Cards -->
-            <div class="space-y-3">
-              ${slide.cards.map(c => `
-                <div class="bg-slate-50/80 rounded-xl p-3.5 border border-slate-200/70 ${c.border} shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
-                  <div class="flex items-center gap-2 mb-1">
-                    <span class="text-sm">${c.icon}</span>
-                    <span class="text-xs md:text-sm font-bold text-slate-900">${c.title}</span>
-                  </div>
-                  <p class="text-[11px] md:text-xs text-slate-600 leading-normal pl-6">
-                    ${c.text}
-                  </p>
-                </div>
-              `).join('')}
-            </div>
+            <!-- Bespoke Slide Content -->
+            ${slide.contentHtml}
           </div>
 
           <!-- Footer -->
-          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] md:text-xs text-slate-500 font-semibold mt-4">
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] md:text-xs text-slate-500 font-semibold mt-2.5">
             <span>${slide.footerLeft}</span>
             <span class="${slide.num === '06 / 06' ? 'text-blue-600 font-bold' : 'text-blue-600'}">${slide.footerRight}</span>
           </div>
@@ -303,6 +432,11 @@
     }
 
     let currentSlide = 0;
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialSlide = parseInt(urlParams.get('slide'), 10);
+    if (!isNaN(initialSlide) && initialSlide >= 1 && initialSlide <= slidesData.length) {
+      currentSlide = initialSlide - 1;
+    }
     const carouselFrame = document.getElementById('carousel-frame');
     const slideIndicator = document.getElementById('slide-indicator');
     const btnPrev = document.getElementById('btn-prev');
