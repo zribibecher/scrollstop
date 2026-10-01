@@ -85,10 +85,10 @@
         num: "01 / 06",
         badge: "LINKEDIN POST ARCHITECTURE",
         headline: "Writing inside LinkedIn?<br><span class=\"text-[#0a66c2]\">Why your posts break.</span>",
-        subtitle: "You draft clean technical insights. LinkedIn's mobile editor strips your spacing into an unreadable wall of text.",
+        subtitle: "You draft clean technical insights. LinkedIn's editor strips your spacing into an unreadable wall of text.",
         contentHtml: `
-          <!-- Simulated Mobile Post Card -->
-          <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 shadow-sm mb-4">
+          <!-- Simulated Post Card -->
+          <div class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 shadow-sm mb-4">
             <div class="flex items-center gap-2.5 pb-2.5 mb-2.5 border-b border-slate-200/70">
               <div class="w-7 h-7 rounded-full bg-[#0a66c2] text-white font-bold text-[11px] flex items-center justify-center">
                 BZ
@@ -100,13 +100,13 @@
             </div>
 
             <!-- Native Post Text with Cutoff Fold -->
-            <div class="text-[11px] text-slate-700 leading-relaxed font-sans relative">
+            <div class="text-[11.5px] text-slate-700 leading-relaxed font-sans relative">
               <p>Most developers do not have an AI problem. They have an input problem. When coding you think in fast thoughts: 1. FastAPI endpoint 2. Postgres filter 3. Avoid crashes...</p>
               
               <!-- Cutoff Fold Warning -->
-              <div class="my-2 border-t-2 border-dashed border-red-300 relative flex items-center justify-center">
-                <span class="bg-red-50 text-red-600 border border-red-200 text-[9px] font-bold px-2 py-0.5 rounded-full absolute -top-2.5">
-                  Mobile "...see more" Cutoff (140 characters)
+              <div class="my-2.5 border-t-2 border-dashed border-red-300 relative flex items-center justify-center">
+                <span class="bg-red-50 text-red-600 border border-red-200 text-[9.5px] font-bold px-2.5 py-0.5 rounded-full absolute -top-3">
+                  The 140-Character Cutoff (Trapped behind "...see more")
                 </span>
               </div>
 
@@ -114,19 +114,19 @@
             </div>
           </div>
 
-          <!-- 3 Technical Problem Badges -->
-          <div class="space-y-2">
-            <div class="bg-white rounded-xl p-2.5 border border-slate-200/90 shadow-xs flex items-start gap-2.5">
-              <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded border border-red-100 shrink-0">Line Collapse</span>
-              <p class="text-[11px] text-slate-600 leading-tight">Double line breaks get stripped into a solid block on iOS and Android apps.</p>
+          <!-- 3 Quick Flaw Badges in Single Row -->
+          <div class="grid grid-cols-3 gap-2.5 text-center">
+            <div class="bg-white rounded-xl p-2.5 border border-slate-200 shadow-xs">
+              <span class="text-[11px] font-bold text-red-600 block mb-0.5">Line Collapse</span>
+              <span class="text-[10px] text-slate-500 leading-tight block">Spacing stripped</span>
             </div>
-            <div class="bg-white rounded-xl p-2.5 border border-slate-200/90 shadow-xs flex items-start gap-2.5">
-              <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-100 shrink-0">Broken Lists</span>
-              <p class="text-[11px] text-slate-600 leading-tight">Deleting one bullet point breaks numbering order and forces manual retyping.</p>
+            <div class="bg-white rounded-xl p-2.5 border border-slate-200 shadow-xs">
+              <span class="text-[11px] font-bold text-amber-700 block mb-0.5">Broken Lists</span>
+              <span class="text-[10px] text-slate-500 leading-tight block">Numbering fails</span>
             </div>
-            <div class="bg-white rounded-xl p-2.5 border border-slate-200/90 shadow-xs flex items-start gap-2.5">
-              <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100 shrink-0">Zero Styling</span>
-              <p class="text-[11px] text-slate-600 leading-tight">LinkedIn offers no native buttons for bold headers, italics, or code blocks.</p>
+            <div class="bg-white rounded-xl p-2.5 border border-slate-200 shadow-xs">
+              <span class="text-[11px] font-bold text-blue-700 block mb-0.5">Zero Styling</span>
+              <span class="text-[10px] text-slate-500 leading-tight block">No native bold</span>
             </div>
           </div>
         `,
@@ -146,7 +146,7 @@
               </div>
               <div class="flex-1">
                 <div class="flex items-center justify-between mb-1">
-                  <h3 class="text-xs md:text-sm font-bold text-slate-900">The 140-Character Mobile Fold</h3>
+                  <h3 class="text-xs md:text-sm font-bold text-slate-900">The 140-Character Fold</h3>
                   <span class="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded border border-red-200">-80% Reach</span>
                 </div>
                 <p class="text-[11px] text-slate-600 leading-normal">
@@ -161,7 +161,7 @@
               </div>
               <div class="flex-1">
                 <div class="flex items-center justify-between mb-1">
-                  <h3 class="text-xs md:text-sm font-bold text-slate-900">Mobile Whitespace Collapse</h3>
+                  <h3 class="text-xs md:text-sm font-bold text-slate-900">Whitespace Collapse</h3>
                   <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Bounce in &lt;2s</span>
                 </div>
                 <p class="text-[11px] text-slate-600 leading-normal">
@@ -206,10 +206,10 @@
               <img src="./assets/ai-formulate.png" alt="Gemini AI Formulate Engine" class="w-full h-auto max-h-[140px] object-contain block mx-auto" />
             </div>
 
-            <!-- Clear Difference Tag -->
-            <div class="bg-slate-50 rounded-xl px-3 py-2 border border-slate-200/80 flex items-center justify-between text-[11px]">
-              <span class="font-extrabold text-slate-900">Summary:</span>
-              <span class="text-slate-600 font-medium">Draft ready? Use Auto-Format. Rough thoughts? Use AI Formulate.</span>
+            <!-- Clear Difference Tag (Fixed, No awkward wrapping) -->
+            <div class="bg-slate-50/90 rounded-xl px-3 py-2 border border-slate-200/90 flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5 text-center text-xs">
+              <span class="font-black text-slate-900 bg-slate-200/80 px-2 py-0.5 rounded text-[10px] tracking-wide uppercase">Rule</span>
+              <span class="text-slate-700">Finished draft? <strong>Auto-Format</strong>. Rough thoughts? <strong>AI Formulate</strong>.</span>
             </div>
           </div>
         `,
