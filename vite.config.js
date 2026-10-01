@@ -7,6 +7,12 @@ export default defineConfig({
   build: {
     outDir: '../../dist',
     emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'src/web/index.html'),
+        carousel: resolve(__dirname, 'src/web/carousel.html')
+      }
+    }
   },
   server: {
     port: 3000,

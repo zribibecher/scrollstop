@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScrollStop · 6-Slide LinkedIn Carousel</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230a66c2' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3v9m0 0l-3-3m3 3l3-3'/><line x1='4' y1='16' x2='20' y2='16' stroke-width='3'/><circle cx='12' cy='16' r='1.5' fill='%23f59e0b' stroke='none'/></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @media print {
+      body { background: white !important; padding: 0 !important; }
+      .no-print { display: none !important; }
+      .slide-page {
+        page-break-after: always !important;
+        break-after: page !important;
+        box-shadow: none !important;
+        border: none !important;
+        margin: 0 !important;
+        width: 100vw !important;
+        height: 125vw !important; /* 4:5 aspect ratio */
+      }
+    }
+    .slide-card {
+      aspect-ratio: 4 / 5;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen p-4 md:p-8 flex flex-col items-center">
+
+  <!-- TOP BAR -->
+  <div class="no-print w-full max-w-4xl flex flex-wrap items-center justify-between gap-4 mb-6 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-black text-sm">
+        🛑
+      </div>
+      <div>
+        <h1 class="text-base font-bold text-slate-900">ScrollStop · LinkedIn Carousel Deck</h1>
+        <p class="text-xs text-slate-500">6 slides optimized for 360Brew dwell-time and viral engagement.</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <button id="btn-toggle-view" class="px-3.5 py-1.5 text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition">
+        Switch to Grid View
+      </button>
+      <button onclick="window.print()" class="px-4 py-1.5 text-xs font-bold bg-[#0a66c2] hover:bg-[#004182] text-white rounded-lg shadow-sm transition active:scale-95 flex items-center gap-1.5">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+        Print / Save PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- SINGLE CAROUSEL VIEW -->
+  <div id="single-view" class="w-full flex flex-col items-center">
+    <div class="no-print flex items-center gap-4 mb-4">
+      <button id="btn-prev" class="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center font-bold text-slate-700 hover:bg-slate-50 disabled:opacity-30">
+        ←
+      </button>
+      <span id="slide-indicator" class="text-xs font-bold uppercase tracking-wider text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200 shadow-sm">
+        Slide 1 of 6
+      </span>
+      <button id="btn-next" class="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center font-bold text-slate-700 hover:bg-slate-50 disabled:opacity-30">
+        →
+      </button>
+    </div>
+
+    <!-- ACTIVE SLIDE CONTAINER -->
+    <div id="carousel-frame" class="w-full max-w-[500px]">
+      <!-- Slides will be injected here by JS -->
+    </div>
+  </div>
+
+  <!-- GRID VIEW CONTAINER (Hidden by default) -->
+  <div id="grid-view" class="hidden w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- All 6 slides rendered side by side -->
+  </div>
+
+  <script>
+    const slidesData = [
+      {
+        num: "01 / 06",
+        badge: "THE FORMATTING TRAP",
+        headline: "Writing inside LinkedIn?<br>Your posts break.",
+        subtitle: "You write clean technical notes. Mobile turns them into walls of text.",
+        cards: [
+          {
+            icon: "🚨",
+            title: "Collapsed Blank Lines",
+            text: "Mobile apps strip double returns into one dense, unreadable block.",
+            border: "border-l-4 border-red-500"
+          },
+          {
+            icon: "🔢",
+            title: "Fragile Numbering",
+            text: "Deleting one bullet forces you to renumber every line manually.",
+            border: "border-l-4 border-amber-500"
+          },
+          {
+            icon: "✂️",
+            title: "Buried Hooks",
+            text: "Crucial takeaways get chopped off before the 140-character fold.",
+            border: "border-l-4 border-rose-500"
+          }
+        ],
+        footerLeft: "Becher Zribi · ScrollStop",
+        footerRight: "Swipe →"
+      },
+      {
+        num: "02 / 06",
+        badge: "THE ALGORITHM PENALTY",
+        headline: "3 silent flaws that<br>kill feed distribution.",
+        subtitle: "LinkedIn measures dwell time. Formatting friction kills it instantly.",
+        cards: [
+          {
+            icon: "📉",
+            title: "The 140-Character Fold",
+            text: "If readers do not tap \"...see more\", your post distribution dies.",
+            border: "border-l-4 border-red-500"
+          },
+          {
+            icon: "⏱️",
+            title: "Missing Whitespace",
+            text: "Readers bounce in under two seconds when facing solid text.",
+            border: "border-l-4 border-amber-500"
+          },
+          {
+            icon: "⚠️",
+            title: "Broken Sequences",
+            text: "Manual formatting errors distract readers from your core technical insight.",
+            border: "border-l-4 border-orange-500"
+          }
+        ],
+        footerLeft: "Becher Zribi · ScrollStop",
+        footerRight: "Swipe →"
+      },
+      {
+        num: "03 / 06",
+        badge: "THE ENGINE",
+        headline: "Format and lint<br>in one single click.",
+        subtitle: "An open-source studio built to automate your posting workflow.",
+        cards: [
+          {
+            icon: "⚡",
+            title: "1-Click Auto-Format",
+            text: "Bolds headers, fixes paragraph whitespace, and renumbers broken lists.",
+            border: "border-l-4 border-blue-500"
+          },
+          {
+            icon: "🧠",
+            title: "Gemini AI Formulate",
+            text: "Turns messy bullet notes into structured drafts via Gemini Flash.",
+            border: "border-l-4 border-purple-500"
+          },
+          {
+            icon: "📱",
+            title: "Live Mobile Simulator",
+            text: "Shows your exact mobile fold cutoff before you hit publish.",
+            border: "border-l-4 border-emerald-500"
+          }
+        ],
+        footerLeft: "Becher Zribi · ScrollStop",
+        footerRight: "Swipe →"
+      },
+      {
+        num: "04 / 06",
+        badge: "BEFORE VS AFTER",
+        headline: "The exact same post.<br>Transformed in seconds.",
+        subtitle: "From unreadable draft to an optimized post ready for distribution.",
+        cards: [
+          {
+            icon: "🛑",
+            title: "Raw LinkedIn Input",
+            text: "Wall of text, buried hook, and unformatted numbers with zero contrast.",
+            border: "border-l-4 border-red-500"
+          },
+          {
+            icon: "⚡",
+            title: "ScrollStop Output",
+            text: "Bold headers, isolated hook, and preserved blank lines for mobile screens.",
+            border: "border-l-4 border-blue-500"
+          },
+          {
+            icon: "✓",
+            title: "Verified Result",
+            text: "98% algorithm reach score with zero mobile line collapse.",
+            border: "border-l-4 border-emerald-500"
+          }
+        ],
+        footerLeft: "Becher Zribi · ScrollStop",
+        footerRight: "Swipe →"
+      },
+      {
+        num: "05 / 06",
+        badge: "RANKING SIGNALS",
+        headline: "3 core signals<br>audited in real time.",
+        subtitle: "Every draft is tested against proven feed mechanics:",
+        cards: [
+          {
+            icon: "🎯",
+            title: "Mobile Cutoff Guard",
+            text: "Keeps your opening hook under 12 words to trigger clicks.",
+            border: "border-l-4 border-blue-500"
+          },
+          {
+            icon: "📱",
+            title: "Whitespace Balance",
+            text: "Enforces clean 1-2 sentence paragraphs to protect reading dwell time.",
+            border: "border-l-4 border-emerald-500"
+          },
+          {
+            icon: "🔗",
+            title: "Link Safety Guard",
+            text: "Flags external links in your post body to prevent reach penalties.",
+            border: "border-l-4 border-amber-500"
+          }
+        ],
+        footerLeft: "Becher Zribi · ScrollStop",
+        footerRight: "Swipe →"
+      },
+      {
+        num: "06 / 06",
+        badge: "GET STARTED",
+        headline: "Open source.<br>Zero subscriptions.",
+        subtitle: "Runs directly in your browser with no accounts and no paywalls.",
+        cards: [
+          {
+            icon: "🌐",
+            title: "Live Web Studio",
+            text: "Test, format, and lint your posts on any device: zribibecher.github.io/scrollstop",
+            border: "border-l-4 border-blue-500"
+          },
+          {
+            icon: "💻",
+            title: "GitHub Repository",
+            text: "Zero dependencies, built with Vite, backed by 41 automated tests.",
+            border: "border-l-4 border-purple-500"
+          },
+          {
+            icon: "🚀",
+            title: "Coming Next",
+            text: "A local Chrome extension to style posts directly inside LinkedIn.",
+            border: "border-l-4 border-emerald-500"
+          }
+        ],
+        footerLeft: "Becher Zribi · ScrollStop",
+        footerRight: "Link in first comment 👇"
+      }
+    ];
+
+    function renderSlideHTML(slide) {
+      return `
+        <div class="slide-page slide-card bg-white rounded-3xl border border-slate-200/80 p-7 md:p-8 flex flex-col justify-between shadow-[0_10px_30px_rgba(0,0,0,0.06)] relative overflow-hidden">
+          <!-- Top Header -->
+          <div>
+            <div class="flex items-center justify-between mb-5">
+              <div class="flex items-center gap-2">
+                <span class="text-base">🛑</span>
+                <span class="font-extrabold text-sm tracking-tight text-slate-900">ScrollStop</span>
+              </div>
+              <span class="text-[11px] font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200/60">
+                ${slide.num}
+              </span>
+            </div>
+
+            <!-- Badge -->
+            <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-50 text-blue-600 border border-blue-200/60 uppercase tracking-wider mb-3">
+              ${slide.badge}
+            </div>
+
+            <!-- Headline -->
+            <h2 class="text-2xl md:text-3xl font-black text-slate-950 tracking-tight leading-tight mb-2">
+              ${slide.headline}
+            </h2>
+
+            <!-- Subtitle -->
+            <p class="text-xs md:text-sm text-slate-600 leading-relaxed font-normal mb-5">
+              ${slide.subtitle}
+            </p>
+
+            <!-- Cards -->
+            <div class="space-y-3">
+              ${slide.cards.map(c => `
+                <div class="bg-slate-50/80 rounded-xl p-3.5 border border-slate-200/70 ${c.border} shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="text-sm">${c.icon}</span>
+                    <span class="text-xs md:text-sm font-bold text-slate-900">${c.title}</span>
+                  </div>
+                  <p class="text-[11px] md:text-xs text-slate-600 leading-normal pl-6">
+                    ${c.text}
+                  </p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] md:text-xs text-slate-500 font-semibold mt-4">
+            <span>${slide.footerLeft}</span>
+            <span class="${slide.num === '06 / 06' ? 'text-blue-600 font-bold' : 'text-blue-600'}">${slide.footerRight}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    let currentSlide = 0;
+    const carouselFrame = document.getElementById('carousel-frame');
+    const slideIndicator = document.getElementById('slide-indicator');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+    const btnToggleView = document.getElementById('btn-toggle-view');
+    const singleView = document.getElementById('single-view');
+    const gridView = document.getElementById('grid-view');
+
+    function updateCarousel() {
+      carouselFrame.innerHTML = renderSlideHTML(slidesData[currentSlide]);
+      slideIndicator.textContent = `Slide ${currentSlide + 1} of ${slidesData.length}`;
+      btnPrev.disabled = currentSlide === 0;
+      btnNext.disabled = currentSlide === slidesData.length - 1;
+    }
+
+    btnPrev.addEventListener('click', () => {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateCarousel();
+      }
+    });
+
+    btnNext.addEventListener('click', () => {
+      if (currentSlide < slidesData.length - 1) {
+        currentSlide++;
+        updateCarousel();
+      }
+    });
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' && currentSlide < slidesData.length - 1) {
+        currentSlide++;
+        updateCarousel();
+      } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
+        currentSlide--;
+        updateCarousel();
+      }
+    });
+
+    let isGrid = false;
+    btnToggleView.addEventListener('click', () => {
+      isGrid = !isGrid;
+      if (isGrid) {
+        singleView.classList.add('hidden');
+        gridView.classList.remove('hidden');
+        gridView.innerHTML = slidesData.map(s => renderSlideHTML(s)).join('');
+        btnToggleView.textContent = 'Switch to Carousel View';
+      } else {
+        gridView.classList.add('hidden');
+        singleView.classList.remove('hidden');
+        btnToggleView.textContent = 'Switch to Grid View';
+        updateCarousel();
+      }
+    });
+
+    updateCarousel();
+  </script>
+</body>
+</html>
