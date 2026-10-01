@@ -7,17 +7,50 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230a66c2' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3v9m0 0l-3-3m3 3l3-3'/><line x1='4' y1='16' x2='20' y2='16' stroke-width='3'/><circle cx='12' cy='16' r='1.5' fill='%23f59e0b' stroke='none'/></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    @page {
+      size: 540px 675px;
+      margin: 0;
+    }
     @media print {
-      body { background: white !important; padding: 0 !important; }
-      .no-print { display: none !important; }
-      .slide-page {
+      @page {
+        size: 540px 675px;
+        margin: 0;
+      }
+      html, body {
+        width: 540px !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .no-print, #single-view, #grid-view {
+        display: none !important;
+      }
+      #print-deck {
+        display: block !important;
+        width: 540px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .print-slide {
+        width: 540px !important;
+        height: 675px !important;
+        max-width: 540px !important;
+        max-height: 675px !important;
         page-break-after: always !important;
         break-after: page !important;
-        box-shadow: none !important;
-        border: none !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        box-sizing: border-box !important;
         margin: 0 !important;
-        width: 100vw !important;
-        height: 125vw !important; /* 4:5 aspect ratio */
+        padding: 32px 36px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        background: #ffffff !important;
+        overflow: hidden !important;
       }
     }
     .slide-card {
@@ -77,6 +110,11 @@
   <!-- GRID VIEW CONTAINER (Hidden by default) -->
   <div id="grid-view" class="hidden w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <!-- All 6 slides rendered side by side -->
+  </div>
+
+  <!-- PRINT DECK CONTAINER (Active only during Print / PDF Export) -->
+  <div id="print-deck" class="hidden">
+    <!-- All 6 slides rendered for 4:5 PDF export -->
   </div>
 
   <script>
@@ -492,6 +530,54 @@
         updateCarousel();
       }
     });
+
+    function renderPrintSlideHTML(slide) {
+      return `
+        <div class="print-slide">
+          <div>
+            <div class="flex items-center justify-between mb-3.5">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-lg bg-[#0a66c2] flex items-center justify-center shadow-xs">
+                  <svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3v9m0 0l-3-3m3 3l3-3" opacity="0.6"/>
+                    <line x1="4" y1="16" x2="20" y2="16" stroke-width="3"/>
+                    <circle cx="12" cy="16" r="1.5" fill="#f59e0b" stroke="none"/>
+                  </svg>
+                </div>
+                <span class="font-black text-sm tracking-tight text-slate-900">Scroll<span class="text-[#0a66c2]">Stop</span></span>
+              </div>
+              <span class="text-[11px] font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200/60">
+                ${slide.num}
+              </span>
+            </div>
+
+            <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-50 text-blue-600 border border-blue-200/60 uppercase tracking-wider mb-2">
+              ${slide.badge}
+            </div>
+
+            <h2 class="text-2xl font-black text-slate-950 tracking-tight leading-tight mb-1.5">
+              ${slide.headline}
+            </h2>
+
+            <p class="text-xs text-slate-600 leading-relaxed font-normal mb-3">
+              ${slide.subtitle}
+            </p>
+
+            ${slide.contentHtml}
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-semibold mt-2.5">
+            <span>${slide.footerLeft}</span>
+            <span class="${slide.num === '06 / 06' ? 'text-blue-600 font-bold' : 'text-blue-600'}">${slide.footerRight}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    const printDeck = document.getElementById('print-deck');
+    if (printDeck) {
+      printDeck.innerHTML = slidesData.map(s => renderPrintSlideHTML(s)).join('');
+    }
 
     updateCarousel();
   </script>
